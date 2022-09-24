@@ -8,7 +8,19 @@ namespace HomeWork_2
         {
             double a = -7;
             double b = 2;
-            double y = Math.Sqrt(r * r - (x - a) * (x - a)) + b;
+            double y = 0;
+            if (r >= 2) { 
+                y = Math.Sqrt(r * r - (x - a) * (x - a)) + b;
+            } else if (r < 2) {
+                if (a - r > x | a + r < x)
+                {
+                    return -10000;
+                } else
+                {
+                    return y = Math.Sqrt(r * r - (x - a) * (x - a)) + b;
+                }
+            }
+
 
             return y; // Возвращаем значение в верхней четверти
         }
@@ -38,20 +50,83 @@ namespace HomeWork_2
 
         static void Main(string[] args)
         {
-            double r;
+            double r, x;
 
             Console.WriteLine("Введите r");
             r = double.Parse(Console.ReadLine());
 
-            for (double x = -9; x <= 5; x += 0.2)
+            if (r > 0)
             {
+                for (x = -9; x < 5.2; x += 0.2)
+                {
+                    if (x < -9)
+                    {
+                        Console.WriteLine("Функция не определена");
+                    }
+                    else if (x < -4.9)
+                    {
+                        if (segment1(x, r) == -10000)
+                        {
+                            Console.WriteLine("Функция не определена в точке {0:0.00}", x);
+                        } else
+                        {
+                            Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment1(x, r));
+                            if (r > 2 & (x < -4.9 & x > -5.1))
+                            {
+                                Console.WriteLine("Разрыв в точке -5");
+                                Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment2(x));
+                            }
+                        }
+                    }
+                    else if (x < -4)
+                    {
+                        Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment2(x));
+                    }
+                    else if (x < 0)
+                    {
+                        Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment3(x));
+                    }
+                    else if (x < Math.PI)
+                    {
+                        Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment4(x));
+                    }
+                    else if (x < 5.2)
+                    {
+                        Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment5(x));
+                    }
+                }
+            } else
+            {
+                Console.WriteLine("Радиус меньше нуля!");
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Введите x");
+                x = double.Parse(Console.ReadLine());
+
                 if (x < -9)
                 {
                     Console.WriteLine("Функция не определена");
                 }
-                else if (x < -5)
+                else if (x < -4.9)
                 {
-                    Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment1(x, r));
+                    Console.WriteLine("Введите r");
+                    r = double.Parse(Console.ReadLine());
+
+                    if (segment1(x, r) == -10000)
+                    {
+                        Console.WriteLine("Функция не определена в точке {0:0.00}", x);
+                    }
+                    else
+                    {
+                        Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment1(x, r));
+                        if (r > 2 & (x < -4.9 & x > -5.1))
+                        {
+                            Console.WriteLine("Разрыв в точке -5");
+                            Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment2(x));
+                        }
+                    }
                 }
                 else if (x < -4)
                 {
@@ -65,7 +140,7 @@ namespace HomeWork_2
                 {
                     Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment4(x));
                 }
-                else if (x <= 5)
+                else
                 {
                     Console.WriteLine("y({0:0.00}) = {1:0.00}", x, segment5(x));
                 }
